@@ -55,6 +55,9 @@ cover/
 *.mo
 *.pot
 
+# Advent of Code
+Input/
+
 # Django stuff:
 *.log
 local_settings.py
