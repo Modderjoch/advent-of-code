@@ -5,7 +5,7 @@ current_dir = os.getcwd()
 
 parent_dir = os.path.dirname(current_dir)
 
-file_path = os.path.join(parent_dir, 'advent-of-code/Input/day1_example.txt')
+file_path = os.path.join(parent_dir, 'advent-of-code/Input/day1.txt')
 
 lines = []
 total_zero_at_end_rotation = 0
