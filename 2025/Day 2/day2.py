@@ -9,6 +9,7 @@ file_path = os.path.join(parent_dir, 'advent-of-code/Input/day2.txt')
 ranges = []
 sum_of_invalid_ids = 0
 invalid_ids = []
+puzzle = 0
 
 def find_divisors(number):
     divisors = []
@@ -28,10 +29,12 @@ def split_string_for_loop(id, divisor):
     return result
 
 with open (file_path, 'r') as file:
-    input = file.readline()
-    ranges = input.split(",")
+    data = file.readline()
+    ranges = data.split(",")
     
     ranges = list(filter(lambda x: not x.startswith("0"), ranges))
+
+    puzzle = input("Enter the solution you want to receive. 1 or 2")
 
 for i, id_range in enumerate(ranges):
     ids = id_range.split("-")
@@ -43,20 +46,26 @@ for i, id_range in enumerate(ranges):
 
         l = str(k)
 
-        midpoint = len(l) // 2
-        first_half = l[:midpoint]
-        second_half = l[midpoint:]
+        if(puzzle == "1"):
+            
+            midpoint = len(l) // 2
+            first_half = l[:midpoint]
+            second_half = l[midpoint:]
 
-        divisors = find_divisors(len(l))
-
-        for d, divisor in enumerate(divisors):
-            if(split_string_for_loop(l, divisor)):
+            if(first_half == second_half):
                 print("Invalid ID found " + first_half + second_half)
-                
-                if(l in invalid_ids):
-                    continue
-                else:
-                    invalid_ids.append(l)
-                    sum_of_invalid_ids += k
+                sum_of_invalid_ids += k
+        
+        elif(puzzle == "2"):
+            divisors = find_divisors(len(l))
+            for d, divisor in enumerate(divisors):
+                if(split_string_for_loop(l, divisor)):
+                    print("Invalid ID found " + l)
+                    
+                    if(l in invalid_ids):
+                        continue
+                    else:
+                        invalid_ids.append(l)
+                        sum_of_invalid_ids += k
         
 print("Total of invalid IDs: " + str(sum_of_invalid_ids))
