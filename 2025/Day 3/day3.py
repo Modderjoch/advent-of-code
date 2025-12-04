@@ -4,10 +4,11 @@ current_dir = os.getcwd()
 
 parent_dir = os.path.dirname(current_dir)
 
-file_path = os.path.join(parent_dir, 'advent-of-code/Input/day3.txt')
+file_path = os.path.join(parent_dir, 'advent-of-code/Input/day3_example.txt')
 
 banks = []
 total_output_joltage = 0
+battery_count = 12
 
 with open (file_path, 'r') as file:
     banks = file.readlines()
@@ -19,7 +20,7 @@ with open (file_path, 'r') as file:
 
 for i, bank in enumerate(banks):
 
-    batteries = [bank[i:i+1] for i in range(0, len(bank), 1)]
+    batteries = [int(bank[i:i+1]) for i in range(len(bank))]
 
     if(puzzle == "1"):
         largest_battery = max(batteries[:-1])
@@ -36,22 +37,25 @@ for i, bank in enumerate(banks):
         
     elif(puzzle == "2"):
 
-        largest_battery = max(batteries[:-11])
+        new_batteries = batteries[:]
 
-        largest_battery_index = batteries.index(largest_battery) + 1
+        biggest_battery = []
 
-        new_batteries = batteries[largest_battery_index:]
+        for k in range(battery_count, 0, -1):
 
-        batteries_to_remove = len(new_batteries) - 11
+            largest_battery = max(new_batteries[:-k])
 
-        for b in range(0, batteries_to_remove, 1):
-            lowest_battery = min(new_batteries)
+            # print(f"Largest battery found: {largest_battery}")
 
-            lowest_battery_index = new_batteries.index(lowest_battery)
+            largest_battery_index = new_batteries.index(largest_battery) + 1
 
-            new_batteries.pop(lowest_battery_index)
+            # print(largest_battery_index)
 
-        largest_possible_joltage = largest_battery + "".join(new_batteries)
+            new_batteries = new_batteries[largest_battery_index:]
+
+            biggest_battery.append(largest_battery)
+
+        largest_possible_joltage = "".join(str(b) for b in biggest_battery)
 
         largest_joltage_int = int(largest_possible_joltage)
 
@@ -60,5 +64,5 @@ for i, bank in enumerate(banks):
 print("The total output joltage is " + str(total_output_joltage))
 
 # 169666831865734 is too low
-# 
+# 171389956243660 is incorrect
 # 1695089027034985 is too high
